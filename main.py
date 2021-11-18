@@ -87,3 +87,70 @@ class LinkedList:
                 prev = node
 
             node = node.next
+     # cleaning list
+    def clean(self):
+        # Nullify head and tail pointers will be enough
+        # Garbage collector will do the rest
+        self.head = None
+        self.tail = None
+
+    # return list of nodes with value="value"
+    def find_all(self, value):
+        result = []
+
+        node = self.head
+        while node is not None:
+            if node.value == value:
+                result.append(node)
+            node = node.next
+
+        return result
+
+    # return length of list
+    def len(self):
+        counter = 0
+        node = self.head
+
+        while node is not None:
+            counter += 1
+            node = node.next
+
+        return counter
+
+    # inserting "new_node" after "target_node"
+    def insert(self, afterNode, newNode):
+        # Appending element in tail if there are empty list and target node is None
+        if self.len() == 0 and afterNode is None:
+            self.add_in_tail(newNode)
+            return
+
+        node = self.head
+        while node is not None:
+            if node == afterNode:
+                newNode.next = node.next
+                node.next = newNode
+
+                if afterNode == self.tail:
+                    self.tail = newNode
+                return
+
+            node = node.next
+
+    # summarize l1 and l2
+    # l1 and l2 - LinkedLists
+    @staticmethod
+    def sum_lists(l1, l2):
+        if l1.len() != l2.len():
+            return None
+
+        result = LinkedList()
+
+        l1_node = l1.head
+        l2_node = l2.head
+
+        while l1_node is not None:
+            result.add_in_tail(Node(l1_node.value + l2_node.value))
+            l1_node = l1_node.next
+            l2_node = l2_node.next
+
+        return result
